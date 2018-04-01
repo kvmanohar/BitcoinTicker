@@ -29,8 +29,8 @@ class ViewController: UIViewController {
     }
 
     
-//    //MARK: - Networking
-//    /***************************************************************/
+    //MARK: - Networking
+    /***************************************************************/
 
     func getBitCoinRate(url: String){
         
