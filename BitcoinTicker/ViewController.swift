@@ -15,8 +15,11 @@ class ViewController: UIViewController {
     
     let baseURL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC"
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
+    let currencySymbols = ["$", "R$", "$", "¥", "€", "£", "$", "Rp", "₪", "₹", "¥", "$", "kr", "$", "zł", "lei", "₽", "kr", "$", "$", "R"]
+    
     var finalURL = ""
-
+    var currencySelected = ""
+    
     //Pre-setup IBOutlets
     @IBOutlet weak var bitcoinPriceLabel: UILabel!
     @IBOutlet weak var currencyPicker: UIPickerView!
@@ -42,7 +45,7 @@ class ViewController: UIViewController {
                 print(bitCoinData)
                 
                 let bitcoinPrice = bitCoinData["ask"].doubleValue
-                self.bitcoinPriceLabel.text = "\(bitcoinPrice)"
+                self.bitcoinPriceLabel.text = self.currencySelected + "\(bitcoinPrice)"
                 
             } else {
                 print("Error: \(String(describing: response.result.error))")
@@ -69,7 +72,9 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        finalURL =  "\(baseURL)\(currencyArray[row])"
+        finalURL =  baseURL + currencyArray[row]
+        currencySelected = currencySymbols[row]
+        
         getBitCoinRate(url: finalURL)
     }
 }
